@@ -99,4 +99,25 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menus, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.calender:
+                System.out.print("click");
+                new DatePickerFragment();
+                break;
+            case R.id.action_settings:
+
+
+                break;
+        }
+        return true;
+    }
 }
