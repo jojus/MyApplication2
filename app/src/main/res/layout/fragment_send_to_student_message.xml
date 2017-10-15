@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="loyola.alex.com.myapplication.SentMessageFragment">
+    tools:context="loyola.alex.com.studentcircularalert.SentMessageFragment">
 
-    <loyola.alex.com.myapplication.MultiSelectionSpinner
+    <loyola.alex.com.studentcircularalert.MultiSelectionSpinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

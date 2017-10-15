@@ -1,4 +1,4 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="loyola.alex.com.myapplication.AboutUsFragment">
+    tools:context="loyola.alex.com.studentcircularalert.AboutUsFragment">
 
     <TextView
         android:layout_width="wrap_content"

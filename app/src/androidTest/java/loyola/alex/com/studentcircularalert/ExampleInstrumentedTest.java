@@ -1,4 +1,4 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("loyola.alex.com.myapplication", appContext.getPackageName());
+        assertEquals("loyola.alex.com.studentcircularalert", appContext.getPackageName());
     }
 }

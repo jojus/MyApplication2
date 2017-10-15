@@ -1,4 +1,4 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 import android.content.Intent;
 import android.os.Bundle;

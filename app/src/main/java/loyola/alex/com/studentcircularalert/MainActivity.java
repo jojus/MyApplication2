@@ -1,13 +1,10 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import loyola.alex.com.studentcircularalert.HomeFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,9 +45,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /*-----NAVIGATION DRAWER BASED ON LOGIN ID-------*/
+        /*if(islogin)
+        {
+            *//*==== ADMIN ====*//*
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+        } else
+        {
+            *//*===== USERS =====*//*
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.user_navigation_drawer);
+        }*/
         FragmentManager fragmentManager = (FragmentManager) getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.lyt_frame_layout, new HomeFragment());
+        transaction.replace(R.id.lyt_frame_layout, new loyola.alex.com.studentcircularalert.HomeFragment());
         transaction.commit();
     }
 
@@ -77,19 +88,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_new_message) {
             FragmentManager fragmentManager = (FragmentManager) getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.lyt_frame_layout, new NewMessageFragment());
+            transaction.replace(R.id.lyt_frame_layout, new loyola.alex.com.studentcircularalert.NewMessageFragment());
             transaction.commit();
             toolbar.setTitle("New Messages");
 
         } else if (id == R.id.nav_about_us) {
             FragmentManager fragmentManager = (FragmentManager) getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.lyt_frame_layout, new AboutUsFragment());
+            transaction.replace(R.id.lyt_frame_layout, new loyola.alex.com.studentcircularalert.AboutUsFragment());
             transaction.commit();
             toolbar.setTitle("About Us");
 
         } else if (id == R.id.nav_logout) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, loyola.alex.com.studentcircularalert.LoginActivity.class));
             finish();
         }
 
@@ -111,7 +122,9 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.calender:
                 System.out.print("click");
-                new DatePickerFragment();
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                startActivity(intent);
                 break;
             case R.id.action_settings:
 

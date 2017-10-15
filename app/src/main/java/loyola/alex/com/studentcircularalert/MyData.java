@@ -1,4 +1,4 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 /**
  * Created by Justin Joy (jojus) on 23-09-2017.

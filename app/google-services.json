@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "328491698617",
+    "firebase_url": "https://studentcircularalert.firebaseio.com",
+    "project_id": "studentcircularalert",
+    "storage_bucket": "studentcircularalert.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328491698617:android:2e4ad706bb149713",
+        "android_client_info": {
+          "package_name": "com.studentcircularalert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328491698617-bmeotoli7apqimu7cmd417j55lqj8190.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studentcircularalert",
+            "certificate_hash": "00466bb65bcb71c4e2d6cf0e3b313ac50c62791f"
+          }
+        },
+        {
+          "client_id": "328491698617-kns56u5fb4iovro8l8dspcan1ueatlsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFJMPh3djkhcqEF7yYKRezv3mKs_8Imwc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328491698617-kns56u5fb4iovro8l8dspcan1ueatlsm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

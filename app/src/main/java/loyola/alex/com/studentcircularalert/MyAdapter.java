@@ -1,4 +1,4 @@
-package loyola.alex.com.myapplication;
+package loyola.alex.com.studentcircularalert;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
