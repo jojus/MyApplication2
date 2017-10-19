@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/input_back"
             android:hint="Enter FullName"
             android:padding="10dp" />
 
@@ -27,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/input_back"
             android:hint="Enter UserName"
             android:padding="10dp" />
 
@@ -36,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/input_back"
             android:hint="Enter Password"
             android:inputType="textPassword"
             android:padding="10dp" />
@@ -47,7 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/input_back"
             android:hint="Enter Mobile Number"
             android:inputType="phone"
             android:padding="10dp" />
@@ -57,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/input_back"
             android:hint="Enter Email id"
             android:inputType="textEmailAddress"
             android:padding="10dp" />
@@ -68,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/input_back"
             android:hint="Enter Department Name"
             android:padding="10dp" />
 
