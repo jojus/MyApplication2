@@ -1,5 +1,6 @@
 package loyola.alex.com.studentcircularalert;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         btnClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog = new ProgressDialog(LoginActivity.this);
+                dialog.setMessage("Autenticate...");
+                dialog.show();
                 String email_value = email.getText().toString();
                 final String password_value = password.getText().toString();
 
@@ -75,9 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                                         if (!task.isSuccessful()) {
                                             Log.w(TAG, "signInWithEmail:failed",
                                                     task.getException());
+                                            dialog.hide();
                                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                                     Toast.LENGTH_SHORT).show();
+
                                         } else {
+                                            dialog.dismiss();
                                             Intent i = new Intent(getBaseContext(),
                                                     MainActivity.class);
                                             startActivity(i);

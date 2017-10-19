@@ -1,124 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <include layout="@layout/toolbar" />
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/full_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_back"
+            android:hint="Enter FullName"
+            android:padding="10dp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="515dp">
 
-                <Button
-                    android:id="@+id/btnRegister"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:layout_alignRight="@+id/controls"
-                    android:layout_below="@+id/controls"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/btn_back"
-                    android:text="Submit"
-                    android:textColor="#ffffff" />
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_back"
+            android:hint="Enter UserName"
+            android:padding="10dp" />
 
-                <LinearLayout
-                    android:id="@+id/controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+        <EditText
+            android:id="@+id/password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_back"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:padding="10dp" />
 
-                    <TextView
-                        android:id="@+id/firstname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="First Name" />
 
-                    <EditText
-                        android:id="@+id/firstname1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/input_back"
-                        android:hint="Enter First Name"
-                        android:padding="10dp" />
+        <EditText
+            android:id="@+id/mobileno1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_back"
+            android:hint="Enter Mobile Number"
+            android:inputType="phone"
+            android:padding="10dp" />
 
-                    <TextView
-                        android:id="@+id/lastname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Last Name" />
+        <EditText
+            android:id="@+id/email1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_back"
+            android:hint="Enter Email id"
+            android:inputType="textEmailAddress"
+            android:padding="10dp" />
 
-                    <EditText
-                        android:id="@+id/lastname1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/input_back"
-                        android:hint="Enter Last Name"
-                        android:padding="10dp" />
 
-                    <TextView
-                        android:id="@+id/mobileno"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Mobile Number" />
+        <EditText
+            android:id="@+id/department1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_back"
+            android:hint="Enter Department Name"
+            android:padding="10dp" />
 
-                    <EditText
-                        android:id="@+id/mobileno1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/input_back"
-                        android:hint="Enter Mobile Number"
-                        android:padding="10dp" />
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_back"
+            android:text="Register"
+            android:textColor="#ffffff" />
 
-                    <TextView
-                        android:id="@+id/email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Email id" />
+    </LinearLayout>
+</LinearLayout>
 
-                    <EditText
-                        android:id="@+id/email1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/input_back"
-                        android:hint="Enter Email id"
-                        android:padding="10dp" />
-
-                    <TextView
-                        android:id="@+id/department"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Department Name" />
-
-                    <EditText
-                        android:id="@+id/department1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/input_back"
-                        android:hint="Enter Department Name"
-                        android:padding="10dp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
