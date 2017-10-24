@@ -29,18 +29,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         final Map<String, String> data = remoteMessage.getData();
         String title = data.get("title");
         String body = data.get("body");
-        if (!title.equals("") && !body.equals("")) {
-            sendNotificationData(title, body); //send notification to user
+
+        if (remoteMessage.getData().size() > 0) {
+            String title1, message;
+            title1 = remoteMessage.getData().get("title");
+            message = remoteMessage.getData().get("message");
+            /*Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);*/
+
+            sendNotificationData(title1, message);
+
         }
     }
 
     private void sendNotificationData(String messageTitle, String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* request code */, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                PendingIntent.FLAG_ONE_SHOT);
 
-        long[] pattern = {500, 500, 500, 500, 500};
+        // long[] pattern = {500, 500, 500, 500, 500};
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -50,7 +60,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentTitle(messageTitle)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
-                        .setVibrate(pattern)
+                        //.setVibrate(pattern)
                         .setLights(Color.BLUE, 1, 1)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
