@@ -13,13 +13,16 @@ public class NewMessageFragment extends Fragment {
     private View mNewMessageFragment;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    private ViewPagerAdapter mViewPagerAdapter;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         mNewMessageFragment = inflater.inflate(R.layout.fragment_new_message, container, false);
         viewPager = (ViewPager) mNewMessageFragment.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+        //mViewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
+        // viewPager.setAdapter(mViewPagerAdapter);
         tabLayout = (TabLayout) mNewMessageFragment.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         return mNewMessageFragment;

@@ -21,7 +21,20 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new SendToAllFragment();
+                break;
+            case 1:
+                fragment = new SendToStaffFragment();
+                break;
+            case 2:
+                fragment = new SendToStudentFragment();
+                break;
+        }
+
+        return fragment;
     }
 
     @Override

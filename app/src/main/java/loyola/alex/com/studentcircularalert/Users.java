@@ -6,14 +6,15 @@ package loyola.alex.com.studentcircularalert;
 
 public class Users {
 
-    String userId, fullName, userName, emailId, password, mobileNumber, department;
+    private String userId, fullName, userName, emailId, password, mobileNumber, department,
+            userRole;
 
     public Users() {
     }
 
     Users(String userId, String fullName, String userName, String emailId, String password,
             String mobileNumber,
-            String department) {
+            String department, String userRole) {
         this.userId = userId;
         this.fullName = fullName;
         this.userName = userName;
@@ -21,6 +22,23 @@ public class Users {
         this.mobileNumber = mobileNumber;
         this.password = password;
         this.department = department;
+        this.userRole = userRole;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public String getFullName() {

@@ -10,6 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 /**
@@ -17,27 +23,61 @@ import java.util.ArrayList;
  */
 
 public class HomeFragment extends Fragment {
+    private static ArrayList<Listdata> data;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    private String message, date, time;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private static ArrayList<DataModel> data;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("message");
+        String key = myRef.push().getKey();
+        Message msg = new Message();
+        // msg.setDate();
+        //msg.setMessage();
+        //msg.setTime();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                data = new ArrayList<Listdata>();
+                // StringBuffer stringbuffer = new StringBuffer();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
-        data = new ArrayList<DataModel>();
+                    Message userdetails = dataSnapshot1.getValue(Message.class);
+                    Listdata listdata = new Listdata();
+                    String name = userdetails.getMessage();
+                    String email = userdetails.getDate();
+                    String address = userdetails.getTime();
+                    listdata.setMessage(name);
+                    listdata.setDate(email);
+                    listdata.setTime(address);
+                    data.add(listdata);
+                    // Toast.makeText(MainActivity.this,""+name,Toast.LENGTH_LONG).show();
+
+                }
+
+                // use a linear layout manager
+                mLayoutManager = new LinearLayoutManager(getContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mAdapter = new MyAdapter(data);
+                mRecyclerView.setAdapter(mAdapter);
+
+        /*data = new ArrayList<DataModel>();
         for (int i = 0; i < MyData.nameArray.length; i++) {
             data.add(new DataModel(
                     MyData.nameArray[i],
@@ -48,8 +88,18 @@ public class HomeFragment extends Fragment {
         }
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(data);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);*/
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return view;
     }
 }
+
+
+
+

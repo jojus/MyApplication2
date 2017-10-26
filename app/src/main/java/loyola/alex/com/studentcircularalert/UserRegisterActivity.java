@@ -8,8 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +34,8 @@ public class UserRegisterActivity extends AppCompatActivity {
     // Write a message to the database
     DatabaseReference mDatabaseReference;
     private EditText inputEmail, inputPassword, fullName, department, mobileNumber, userName;
+    private TextView moveToLogin;
+    private Spinner userRole;
     private ProgressDialog mProgressDialog;
     private FirebaseAuth auth;
 
@@ -49,7 +55,8 @@ public class UserRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
-
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
         tool.setTitle("Signup");
         setSupportActionBar(tool);
@@ -68,8 +75,16 @@ public class UserRegisterActivity extends AppCompatActivity {
         fullName = (EditText) findViewById(R.id.full_name);
         userName = (EditText) findViewById(R.id.user_name);
         btnRegister = (Button) findViewById(R.id.btnRegister);
+        moveToLogin = (TextView) findViewById(R.id.link_to_login);
+        userRole = (Spinner) findViewById(R.id.user_role);
 
-
+        moveToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent login = new Intent(UserRegisterActivity.this, LoginActivity.class);
+                startActivity(login);
+            }
+        });
        /* mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -102,6 +117,26 @@ public class UserRegisterActivity extends AppCompatActivity {
                 String uname = userName.getText().toString();
                 String mobileNum = mobileNumber.getText().toString();
                 String dep = department.getText().toString();
+
+                userRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    public void onItemSelected(AdapterView<?> arg0, View arg1,
+                            int arg2, long arg3) {
+                        // TODO Auto-generated method stub
+
+                        Toast.makeText(getBaseContext(), userRole.getSelectedItem().toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    public void onNothingSelected(AdapterView<?> arg0) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+                String selectedItem = userRole.getSelectedItem().toString();
+                System.out.println("selected item" + selectedItem);
+
                 if (TextUtils.isEmpty(email) && TextUtils.isEmpty(fname) && TextUtils.isEmpty(uname)
                         && TextUtils.isEmpty(mobileNum) && TextUtils.isEmpty(dep)) {
                     // email is empty
@@ -112,7 +147,8 @@ public class UserRegisterActivity extends AppCompatActivity {
                     return;
                 } else {
                     String id = mDatabaseReference.push().getKey();
-                    Users users = new Users(id, fname, uname, email, password, mobileNum, dep);
+                    Users users = new Users(id, fname, uname, email, password, mobileNum, dep,
+                            selectedItem);
                     myRef.child(id).setValue(users);
                     /*myRef.child("email").setValue(email);
                     myRef.child("full_name").setValue(fname);
@@ -149,6 +185,10 @@ public class UserRegisterActivity extends AppCompatActivity {
                                     Toast.makeText(UserRegisterActivity.this,
                                             "Authentication Failed", Toast.LENGTH_LONG).show();
                                 } else {
+
+                                    Toast.makeText(UserRegisterActivity.this,
+                                            "User Registered Successfull",
+                                            Toast.LENGTH_LONG).show();
                                     Intent loginActivity = new Intent(UserRegisterActivity.this,
                                             LoginActivity.class);
                                     startActivity(loginActivity);

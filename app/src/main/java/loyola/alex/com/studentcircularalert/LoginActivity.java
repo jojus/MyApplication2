@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,10 +27,13 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         email = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         btnClick = (Button) findViewById(R.id.btnClick);
@@ -59,12 +63,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(email_value)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!",
                             Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password_value)) {
                     Toast.makeText(getApplicationContext(), "Enter password!",
                             Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     return;
                 }
 
@@ -84,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (!task.isSuccessful()) {
                                             Log.w(TAG, "signInWithEmail:failed",
                                                     task.getException());
-                                            dialog.hide();
+                                            dialog.dismiss();
                                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                                     Toast.LENGTH_SHORT).show();
 
