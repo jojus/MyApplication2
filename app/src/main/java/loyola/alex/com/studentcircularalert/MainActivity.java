@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         final String mail = i.getStringExtra("email");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mReference = mFirebaseDatabase.getReference("users");
-
+// retrieve data
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
