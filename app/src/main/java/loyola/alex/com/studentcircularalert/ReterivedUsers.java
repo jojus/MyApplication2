@@ -1,18 +1,18 @@
 package loyola.alex.com.studentcircularalert;
 
 /**
- * Created by Justin Joy (jojus) on 20-10-2017.
+ * Created by Justin Joy (jojus) on 27-10-2017.
  */
 
-public class Users {
+public class ReterivedUsers {
 
     private String userId, fullName, userName, emailId, password, mobileNumber, department,
             userRole;
 
-    public Users() {
+    public ReterivedUsers() {
     }
 
-    Users(String userId, String fullName, String userName, String emailId, String password,
+    ReterivedUsers(String userId, String fullName, String userName, String emailId, String password,
             String mobileNumber,
             String department, String userRole) {
         this.userId = userId;
@@ -88,7 +88,5 @@ public class Users {
     public void setDepartment(String department) {
         this.department = department;
     }
-
-
 }
 

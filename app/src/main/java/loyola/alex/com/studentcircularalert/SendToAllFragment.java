@@ -2,7 +2,6 @@ package loyola.alex.com.studentcircularalert;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ public class SendToAllFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference myRef;
     private EditText detailedMessage;
-    private Button send;
     private String TAG = SendToAllFragment.class.getSimpleName();
 
     @Override
@@ -33,7 +31,7 @@ public class SendToAllFragment extends Fragment {
         getActivity().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         detailedMessage = (EditText) view.findViewById(R.id.msgbox);
-        send = (Button) view.findViewById(R.id.send);
+        Button send = (Button) view.findViewById(R.id.send);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("message");
         send.setOnClickListener(new View.OnClickListener() {
@@ -42,10 +40,10 @@ public class SendToAllFragment extends Fragment {
                 String message = detailedMessage.getText().toString();
                 Date currentTime = Calendar.getInstance().getTime();
                 String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-                Log.i(TAG, "message1" + message);
+                /*Log.i(TAG, "message1" + message);
                 System.out.println("message" + message);
                 System.out.println("currentTime" + currentTime);
-                System.out.println("time" + currentDateTimeString);
+                System.out.println("time" + currentDateTimeString);*/
                 DateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
                 dateFormatter.setLenient(false);
                 Date today = new Date();

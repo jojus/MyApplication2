@@ -13,6 +13,6 @@
     <string-array name="user_role">
         <item>Student</item>
         <item>Staff</item>
-        <item>No Technical Staff</item>
+        <item>Non Teaching Staff</item>
     </string-array>
 </resources>

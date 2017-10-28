@@ -61,10 +61,8 @@ public class UserRegisterActivity extends AppCompatActivity {
         tool.setTitle("Signup");
         setSupportActionBar(tool);
         /*DATABASE REFERENCE*/
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("users");
+
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -111,12 +109,12 @@ public class UserRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 // getting user entered email and password
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-                String fname = fullName.getText().toString();
-                String uname = userName.getText().toString();
-                String mobileNum = mobileNumber.getText().toString();
-                String dep = department.getText().toString();
+                final String email = inputEmail.getText().toString().trim();
+                final String password = inputPassword.getText().toString().trim();
+                final String fname = fullName.getText().toString();
+                final String uname = userName.getText().toString();
+                final String mobileNum = mobileNumber.getText().toString();
+                final String dep = department.getText().toString();
 
                 userRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -134,68 +132,74 @@ public class UserRegisterActivity extends AppCompatActivity {
                     }
                 });
 
-                String selectedItem = userRole.getSelectedItem().toString();
+                final String selectedItem = userRole.getSelectedItem().toString();
                 System.out.println("selected item" + selectedItem);
 
                 if (TextUtils.isEmpty(email) && TextUtils.isEmpty(fname) && TextUtils.isEmpty(uname)
-                        && TextUtils.isEmpty(mobileNum) && TextUtils.isEmpty(dep)) {
+                        && TextUtils.isEmpty(mobileNum) && TextUtils.isEmpty(dep)
+                        && TextUtils.isEmpty(password)) {
                     // email is empty
-                    Toast.makeText(getApplicationContext(), "Enter email address!",
+                    Toast.makeText(getApplicationContext(), "Enter all fields!",
                             Toast.LENGTH_SHORT).show();
-                    Toast.makeText(UserRegisterActivity.this, "user added",
-                            Toast.LENGTH_LONG).show();
+
+                    return;
+                } else if (password.length() < 6) {
+                    // password length is minimum 6 chars
+                    Toast.makeText(getApplicationContext(),
+                            "Password too short, enter minimum 6 characters!",
+                            Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    String id = mDatabaseReference.push().getKey();
-                    Users users = new Users(id, fname, uname, email, password, mobileNum, dep,
-                            selectedItem);
-                    myRef.child(id).setValue(users);
+                    auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
+                            UserRegisterActivity.this,
+                            new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        mProgressDialog.dismiss();
+                                        Toast.makeText(UserRegisterActivity.this,
+                                                "Authentication Failed:Mail id is already "
+                                                        + "registered",
+                                                Toast.LENGTH_LONG).show();
+                                    } else {
+                                        mDatabaseReference =
+                                                FirebaseDatabase.getInstance().getReference(
+                                                        "users/" + selectedItem);
+                                        String id = mDatabaseReference.push().getKey();
+                                        Users users = new Users(id, fname, uname, email, password,
+                                                mobileNum, dep,
+                                                selectedItem);
+                                        mDatabaseReference.child(id).setValue(users);
                     /*myRef.child("email").setValue(email);
                     myRef.child("full_name").setValue(fname);
                     myRef.child("user_name").setValue(uname);
                     myRef.child("password").setValue(password);
                     myRef.child("mobile_number").setValue(mobileNum);
                     myRef.child("department").setValue(dep);*/
+                                        Toast.makeText(UserRegisterActivity.this,
+                                                "User Registered Successfull",
+                                                Toast.LENGTH_LONG).show();
+                                        Intent loginActivity = new Intent(UserRegisterActivity.this,
+                                                LoginActivity.class);
+                                        startActivity(loginActivity);
+                                    }
+                                }
+                            });
+
+
+                    // Toast.makeText(UserRegisterActivity.this, "user added",
+                    //Toast.LENGTH_LONG).show();
                 }
 
-                if (TextUtils.isEmpty(password)) {
+             /*   if () {
                     // password is empty
                     Toast.makeText(getApplicationContext(), "Enter password!",
                             Toast.LENGTH_SHORT).show();
                     return;
-                }
+                }*/
 
                 mProgressDialog.setMessage("Registering Please Wait....");
                 mProgressDialog.show();
-
-               /* if (password.length() < 6) {
-                    // password length is minimum 6 chars
-                    Toast.makeText(getApplicationContext(),
-                            "Password too short, enter minimum 6 characters!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }*/
-
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-                        UserRegisterActivity.this,
-                        new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(UserRegisterActivity.this,
-                                            "Authentication Failed", Toast.LENGTH_LONG).show();
-                                } else {
-
-                                    Toast.makeText(UserRegisterActivity.this,
-                                            "User Registered Successfull",
-                                            Toast.LENGTH_LONG).show();
-                                    Intent loginActivity = new Intent(UserRegisterActivity.this,
-                                            LoginActivity.class);
-                                    startActivity(loginActivity);
-                                }
-                            }
-                        });
-
             }
         });
     }

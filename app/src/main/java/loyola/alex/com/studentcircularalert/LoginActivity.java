@@ -19,10 +19,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = LoginActivity.class.getSimpleName();
+    private static ArrayList<Users> userDetails;
     Button btnClick, btnRegister;
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mReference, mChild;
+    SessionManager session;
     private EditText email, password;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -34,10 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        session = new SessionManager(getApplicationContext());
         email = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         btnClick = (Button) findViewById(R.id.btnClick);
         btnRegister = (Button) findViewById(R.id.btnRegister);
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 dialog = new ProgressDialog(LoginActivity.this);
                 dialog.setMessage("Autenticate...");
                 dialog.show();
-                String email_value = email.getText().toString();
+                final String email_value = email.getText().toString();
                 final String password_value = password.getText().toString();
 
                 if (TextUtils.isEmpty(email_value)) {
@@ -82,22 +96,28 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d(TAG, "signInWithEmail:onComplete:"
                                                 + task.isSuccessful());
 
-                                        // If sign in fails, display a message to the user. If
+                                        // If sign in fails, display a message to the
+                                        // user. If
                                         // sign in succeeds
-                                        // the auth state listener will be notified and logic to
+                                        // the auth state listener will be notified and
+                                        // logic to
                                         // handle the
                                         // signed in user can be handled in the listener.
                                         if (!task.isSuccessful()) {
                                             Log.w(TAG, "signInWithEmail:failed",
                                                     task.getException());
                                             dialog.dismiss();
-                                            Toast.makeText(LoginActivity.this, R.string.auth_failed,
+                                            Toast.makeText(LoginActivity.this,
+                                                    R.string.auth_failed,
                                                     Toast.LENGTH_SHORT).show();
 
                                         } else {
+                                            //retrieveData();
+
                                             dialog.dismiss();
                                             Intent i = new Intent(getBaseContext(),
                                                     MainActivity.class);
+                                            i.putExtra("email", email_value);
                                             startActivity(i);
                                             finish();
                                         }
@@ -121,6 +141,55 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
     }
+
+    private void retrieveData() {
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mReference = mFirebaseDatabase.getReference("users");
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userDetails = new ArrayList<Users>();
+                // StringBuffer stringbuffer = new StringBuffer();
+                Intent i = getIntent();
+                String mail = i.getStringExtra("email");
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    String children = dataSnapshot1.getKey();
+                    System.out.println("childrens" + children);
+                    mChild = mReference.child(children);
+                    ReterivedUsers reterivedUsers =
+                            dataSnapshot1.getValue(ReterivedUsers.class);
+
+                    String name = reterivedUsers.getFullName();
+                    String email = reterivedUsers.getEmailId();
+                    String userName = reterivedUsers.getUserName();
+                    String mobileNumber = reterivedUsers.getMobileNumber();
+                    String department = reterivedUsers
+                            .getDepartment();
+
+                    Users listdata = new Users();
+                    listdata.setFullName(name);
+                    listdata.setEmailId(email);
+                    listdata.setUserName(userName);
+                    listdata.setMobileNumber(mobileNumber);
+                    listdata.setDepartment(department);
+                    userDetails.add(listdata);
+
+                    System.out.println("ALL USERS IN FIREBASE" + listdata.getEmailId());
+                    //session.createUserLoginSession(listdata.getFullName(),listdata.getUserName
+                    // (),listdata.getEmailId(),listdata.getUserRole());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
 
     @Override
     public void onStart() {
