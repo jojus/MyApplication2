@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
     private static ArrayList<Users> userDetails;
     Toolbar toolbar;
     FirebaseDatabase mFirebaseDatabase;
-    DatabaseReference mReference, mChild;
+    DatabaseReference mReference;
     String associateRole;
     String uRole;
 
@@ -51,60 +51,45 @@ public class MainActivity extends AppCompatActivity
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                userDetails = new ArrayList<>();
+                userDetails = new ArrayList<Users>();
                 // StringBuffer stringbuffer = new StringBuffer();
-                String child = dataSnapshot.getKey();
-                DatabaseReference keyRef = FirebaseDatabase.getInstance().getReference().child(
-                        "users").child(child);
-                ValueEventListener valueEventListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            ReterivedUsers reterivedUsers =
-                                    ds.getValue(ReterivedUsers.class);
 
-                            String name = reterivedUsers.getFullName();
-                            String email = reterivedUsers.getEmailId();
-                            String userName = reterivedUsers.getUserName();
-                            String mobileNumber = reterivedUsers.getMobileNumber();
-                            String department = reterivedUsers
-                                    .getDepartment();
-                            String role = reterivedUsers.getUserRole();
-
-                            Users listdata = new Users();
-                            listdata.setFullName(name);
-                            listdata.setEmailId(email);
-                            listdata.setUserName(userName);
-                            listdata.setMobileNumber(mobileNumber);
-                            listdata.setDepartment(department);
-                            listdata.setUserRole(role);
-                            userDetails.add(listdata);
-                            // Toast.makeText(MainActivity.this,""+name,Toast.LENGTH_LONG).show();
-                            if (mail.equals(listdata.getEmailId())) {
-                                String name1 = listdata.getFullName();
-                                String email1 = listdata.getEmailId();
-                                String userName1 = listdata.getUserName();
-                                String mobileNumber1 = listdata.getMobileNumber();
-                                String department1 = listdata
-                                        .getDepartment();
-                                String role1 = reterivedUsers.getUserRole();
-                                session.createUserLoginSession(name1, userName1, email1, role1);
-
-                            }
-                            System.out.println("ALL USERS IN FIREBASE" + listdata.getEmailId());
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                };
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     String children = dataSnapshot1.getKey();
 
-                    mChild = mReference.child(children);
+
+                    ReterivedUsers reterivedUsers =
+                            dataSnapshot1.getValue(ReterivedUsers.class);
+
+                    String name = reterivedUsers.getFullName();
+                    String email = reterivedUsers.getEmailId();
+                    String userName = reterivedUsers.getUserName();
+                    String mobileNumber = reterivedUsers.getMobileNumber();
+                    String department = reterivedUsers
+                            .getDepartment();
+                    String role = reterivedUsers.getUserRole();
+
+                    Users listdata = new Users();
+                    listdata.setFullName(name);
+                    listdata.setEmailId(email);
+                    listdata.setUserName(userName);
+                    listdata.setMobileNumber(mobileNumber);
+                    listdata.setDepartment(department);
+                    listdata.setUserRole(role);
+                    userDetails.add(listdata);
+                    // Toast.makeText(MainActivity.this,""+name,Toast.LENGTH_LONG).show();
+                    if (mail.equals(listdata.getEmailId())) {
+                        String name1 = listdata.getFullName();
+                        String email1 = listdata.getEmailId();
+                        String userName1 = listdata.getUserName();
+                        String mobileNumber1 = listdata.getMobileNumber();
+                        String department1 = listdata
+                                .getDepartment();
+                        String role1 = reterivedUsers.getUserRole();
+                        session.createUserLoginSession(name1, userName1, email1, role1);
+
+                    }
+                    System.out.println("ALL USERS IN FIREBASE" + listdata.getEmailId());
 
 
                 }
